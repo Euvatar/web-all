@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Interativo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #4d5d58;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        header img {
+            max-width: 300px;
+            width: 100%;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background-color: #f4e9d3;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h4 {
+            font-size: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .send-button {
+            background-color: #caa88d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+        }
+
+        .send-button:hover {
+            background-color: #A2765A;
+        }
+
+        .powered-by {
+            text-align: center;
+            margin-top: auto;
+            padding: 10px 0;
+            background-color: #fff;
+        }
+
+        .powered-by img {
+            max-width: 120px;
+            width: 100%;
+        }
+
+        .powered-by p {
+            font-size: 12px;
+            color: #6c757d;
+            margin: 5px 0 0;
+        }
+
+        .alert {
+            text-align: center;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .question label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="allwert_branco.png" alt="Logo ou imagem de topo">
+    </header>
+    <div id="responseMessage" class="alert" style="display: none;"></div>
+
+    <div class="container">
+        <div class="card shadow-sm">
+            <h4 class="text-center mb-4">Responda o Quiz e Envie Suas Respostas!</h4>
+            
+            <form id="quizForm">
+                <!-- Pergunta 1 -->
+                <div class="question">
+                    <label>1. Quem são os sócios da All Wert?</label>
+                    <select class="form-select" name="socios">
+                        <option value="Tita, Rogério e Richard">Tita, Rogério e Richard</option>
+                        <option value="Richard, Martin e Marcelo">Richard, Martin e Marcelo</option>
+                        <option value="Tita, Richard e Martin">Tita, Richard e Martin</option>
+                    </select>
+                </div>
+            
+                <!-- Pergunta 2 -->
+                <div class="question">
+                    <label>2. Quais os empreendimentos já foram lançados dentro do All Resort?</label>
+                    <select class="form-select" name="empreendimentos">
+                        <option value="Porto Belo Golf All Resort e Golf VIew All Resort">
+                            Porto Belo Golf All Resort e Golf View All Resort
+                        </option>
+                        <option value="All Resort e Porto Belo Golf All Resort">
+                            All Resort e Porto Belo Golf All Resort
+                        </option>
+                        <option value="Apenas o Golf View All Resort foi lançado">
+                            Apenas o Golf View All Resort foi lançado
+                        </option>
+                    </select>
+                </div>
+            
+                <!-- Pergunta 3 -->
+                <div class="question">
+                    <label>3. Quando será entregue o Porto Belo Golf All Resort?</label>
+                    <select class="form-select" name="entrega">
+                        <option value="Final de 2024">Final de 2024</option>
+                        <option value="Segundo semestre de 2025">Segundo semestre de 2025</option>
+                        <option value="Primeiro semestre de 2025">Primeiro semestre de 2025</option>
+                    </select>
+                </div>
+            
+                <!-- Pergunta 4 -->
+                <div class="question">
+                    <label>4. Qual escola de Golf terá no Porto Belo Golf All Resort?</label>
+                    <select class="form-select" name="escolaGolf">
+                        <option value="Royal County Down">Royal County Down</option>
+                        <option value="Golfzon Leadbetter Academy">Golfzon Leadbetter Academy</option>
+                        <option value="Monte Rei Golf Course">Monte Rei Golf Course</option>
+                    </select>
+                </div>
+            
+                <!-- Pergunta 5 -->
+                <div class="question">
+                    <label>5. Quantos terrenos possui o Porto Belo Golf All Resort?</label>
+                    <select class="form-select" name="terrenos">
+                        <option value="450 terrenos">450 terrenos</option>
+                        <option value="372 terrenos">372 terrenos</option>
+                        <option value="379 terrenos">379 terrenos</option>
+                    </select>
+                </div>
+            
+                <!-- Pergunta 6 -->
+                <div class="question">
+                    <label>6. Qual o tamanho total do All Resort?</label>
+                    <select class="form-select" name="tamanho">
+                        <option value="270 hectares">270 hectares</option>
+                        <option value="232 hectares">232 hectares</option>
+                        <option value="220 hectares">220 hectares</option>
+                    </select>
+                </div>
+            
+                <!-- Pergunta 7 -->
+                <div class="question">
+                    <label>7. Onde está localizado o Porto Belo Golf All Resort?</label>
+                    <select class="form-select" name="localizacao">
+                        <option value="Na Costa Esmeralda, conhecida por suas praias certificadas pela bandeira azul">
+                            Na Costa Esmeralda, conhecida por suas praias certificadas pela bandeira azul
+                        </option>
+                        <option value="Na Costa Azul, famosa por suas praias de águas escuras">
+                            Na Costa Azul, famosa por suas praias de águas escuras
+                        </option>
+                        <option value="Na Costa do Sol, reconhecida por sua vegetação desértica">
+                            Na Costa do Sol, reconhecida por sua vegetação desértica
+                        </option>
+                    </select>
+                </div>
+            
+                <!-- Pergunta 8 -->
+                <div class="question">
+                    <label>8. Quais as certificações o empreendimento possui?</label>
+                    <select class="form-select" name="certificacoes">
+                        <option value="ENERGY STAR de eficiência energética e BREEAM de sustentabilidade">
+                            ENERGY STAR de eficiência energética e BREEAM de sustentabilidade
+                        </option>
+                        <option value="LEED de construções verdes e ISO 9001 de qualidade">
+                            LEED de construções verdes e ISO 9001 de qualidade
+                        </option>
+                        <option value="SITES de Condomínios Sustentáveis e FITWEL de bem-estar humano">
+                            SITES de Condomínios Sustentáveis e FITWEL de bem-estar humano
+                        </option>
+                    </select>
+                </div>
+            
+                <!-- Botão de envio -->
+                <div class="text-center">
+                    <button type="button" class="send-button" onclick="sendQuiz()">Enviar Respostas</button>
+                </div>
+            </form>          
+        </div>
+    </div>
+
+    <div class="powered-by">
+        <p>Powered by</p>
+        <img src="euvatar.png" alt="Powered by logo">
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function sendQuiz() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const whatsappNumber = urlParams.get('number');
+            const responseMessage = document.getElementById('responseMessage');
+            
+            if (!whatsappNumber) {
+                responseMessage.style.display = 'block';
+                responseMessage.className = 'alert alert-danger';
+                responseMessage.textContent = "Por favor, inclua o número de WhatsApp na URL usando '?number=NUMERO'.";
+                return;
+            }
+        
+            const form = document.getElementById('quizForm');
+            const formData = new FormData(form);
+            const quizData = Object.fromEntries(formData.entries());
+        
+            // Estruturando os dados no formato esperado pela API, mapeando todas as perguntas
+            const columns = {
+            "F": 'ok',
+            "G": quizData.socios,        // Mapeando a resposta de "Quem são os sócios da All Wert?"
+            "H": quizData.empreendimentos, // Mapeando a resposta de "Quais os empreendimentos já foram lançados dentro do All Resort?"
+            "I": quizData.entrega,         // Mapeando a resposta de "Quando será entregue o Porto Belo Golf All Resort?"
+            "J": quizData.escolaGolf,      // Mapeando a resposta de "Qual escola de Golf terá no Porto Belo Golf All Resort?"
+            "K": quizData.terrenos,        // Mapeando a resposta de "Quantos terrenos possui o Porto Belo Golf All Resort?"
+            "L": quizData.tamanho,         // Mapeando a resposta de "Qual o tamanho total do All Resort?"
+            "M": quizData.localizacao,     // Mapeando a resposta de "Onde está localizado o Porto Belo Golf All Resort?"
+            "N": quizData.certificacoes,   // Mapeando a resposta de "Quais as certificações o empreendimento possui?"
+            "O": whatsappNumber            // Incluindo o número do WhatsApp
+        };
+        
+            // Montando o objeto final com o número do WhatsApp e as respostas
+            const requestBody = {
+                whatsappNumber: whatsappNumber,
+                columns: columns
+            };
+        
+            const sendButton = document.querySelector('.send-button');
+            sendButton.textContent = "Enviando...";
+            sendButton.disabled = true;
+        
+            fetch('https://allresortapi.euvatar.com.br/update-sheet', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(requestBody)  // Envia o objeto com o número e as colunas
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Sucesso
+                responseMessage.style.display = 'block';
+                responseMessage.className = 'alert alert-success';
+                responseMessage.textContent = "Respostas enviadas com sucesso!";
+                // Redireciona para a página de agradecimento após 2 segundos
+                setTimeout(() => {
+                    window.location.href = "agradecimento_quiz.html"; // Substitua com a URL da página de agradecimento
+                }, 2000);
+            })
+            .catch(error => {
+                // Erro
+                responseMessage.style.display = 'block';
+                responseMessage.className = 'alert alert-danger';
+                responseMessage.textContent = "Ocorreu um erro ao enviar suas respostas. Tente novamente!";
+            })
+            .finally(() => {
+                sendButton.textContent = "Enviar Respostas";
+                sendButton.disabled = false;
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro Credencialmente</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #4d5d58;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            color: white;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px 0;
+            color: white;
+        }
+
+        header img {
+            max-width: 300px;
+            width: 100%;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding-top: 40px;
+        }
+
+        .card {
+            background-color: #f4e9d3;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .upload-button {
+            background-color: #caa88d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+        }
+
+        .upload-button:hover {
+            background-color: #A2765A;
+        }
+
+        .image-preview {
+            max-width: 100%;
+            max-height: 300px;
+            margin-bottom: 20px;
+            border: 2px solid #caa88d;
+            border-radius: 8px;
+        }
+
+        .powered-by {
+            text-align: center;
+            margin-top: auto;
+            padding: 10px 0;
+            background-color: #fff;
+        }
+
+        .powered-by img {
+            max-width: 120px;
+            width: 100%;
+        }
+
+        .powered-by p {
+            font-size: 12px;
+            color: #6c757d;
+            margin: 5px 0 0;
+        }
+
+        .alert {
+            text-align: center;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .thumbnail-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .thumbnail-container h3 {
+            font-size: 30px;
+            color: white;
+            margin-top: 10px;
+        }
+
+        .thumbnail-container img {
+            max-width: 60%;
+            height: auto;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- <header>
+        <img src="allwert_branco.png" alt="Logo ou imagem de topo">
+    </header> -->
+
+    <div class="container">
+        <!-- Thumbnail com título e logo/imagem de topo -->
+        <div class="thumbnail-container">
+            <img src="allwert_branco.png" alt="Imagem de topo ou logo">
+            <h3>Cadastro Credencialmente</h3>
+        </div>
+
+        <div class="card shadow-sm">
+            <h2>Faça aqui seu credenciamento</h2>
+            <p class="text-center mb-4">O portal para o futuro está chegando.</p>
+            <p class="text-center"><strong>Carregue sua foto.</strong></p>
+            <p class="text-center text-muted mb-3">*Certifique-se de que está sozinho na imagem.</p>
+            
+            <!-- Pré-visualização da imagem será exibida aqui -->
+            <div id="previewContainer" style="display: none;" class="text-center">
+                <img id="imagePreview" class="image-preview" alt="Pré-visualização da imagem selecionada">
+            </div>
+            
+            <div class="text-center">
+                <button id="actionButton" class="upload-button" onclick="triggerFileSelection()">Escolher Arquivo</button>
+                <input type="file" id="fileInput" accept="image/*" style="display:none;" onchange="previewImage()">
+            </div>
+        </div>
+
+        <div id="alertMessage" class="alert" style="display: none;"></div>
+    </div>
+
+    <div class="powered-by">
+        <p>Powered by</p>
+        <img src="euvatar.png" alt="Powered by logo">
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const whatsappNumber = urlParams.get('number');
+        const name =urlParams.get('name');
+
+        if (!whatsappNumber) {
+            alert("Por favor, inclua o número de WhatsApp na URL usando '?number=NUMERO'.");
+            throw new Error("Número de WhatsApp não fornecido!");
+        }
+
+        function triggerFileSelection() {
+            document.getElementById('fileInput').click();
+        }
+
+        function previewImage() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const previewContainer = document.getElementById('previewContainer');
+                    const imagePreview = document.getElementById('imagePreview');
+                    imagePreview.src = event.target.result;
+                    previewContainer.style.display = 'block';
+                    
+                    // Atualiza o botão para "Enviar Imagem"
+                    const actionButton = document.getElementById('actionButton');
+                    actionButton.textContent = "Enviar Imagem";
+                    actionButton.onclick = uploadImage;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        async function uploadImage() {
+        const fileInput = document.getElementById('fileInput');
+        const file = fileInput.files[0];
+
+        if (!file) {
+            document.getElementById('actionButton').textContent = "Por favor, selecione uma imagem!";
+            return;
+        }
+
+        const renamedFile = new File([file], `${name}_${whatsappNumber}.jpg`, { type: file.type });
+        const formData = new FormData();
+        formData.append('image', renamedFile);
+        formData.append('whatsappNumber', whatsappNumber);
+
+        // Altera o texto do botão para "Enviando..."
+        document.getElementById('actionButton').textContent = "Enviando...";
+
+        try {
+            const response = await fetch('https://allresortapi.euvatar.com.br/credencial', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                // Atualiza o texto do botão para "Imagem Enviada com Sucesso!"
+                document.getElementById('actionButton').textContent = "Imagem Enviada com Sucesso!";
+                // Redireciona para a página de agradecimento após o envio
+                window.location.href = 'agradecimento.html'; // Caminho para a página de agradecimento
+            } else {
+                // Se houver erro no envio
+                document.getElementById('actionButton').textContent = "Erro ao Enviar Imagem";
+                showAlert('Erro ao enviar a imagem. Tente novamente.');
+            }
+        } catch (error) {
+            // Se houver erro no envio
+            document.getElementById('actionButton').textContent = "Erro ao Enviar Imagem";
+            showAlert('Erro ao enviar a imagem. Tente novamente.');
+            console.error("Erro ao enviar imagem:", error);
+        }
+    }
+
+
+        function showAlert(message) {
+            const alertMessage = document.getElementById('alertMessage');
+            alertMessage.textContent = message;
+            alertMessage.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
